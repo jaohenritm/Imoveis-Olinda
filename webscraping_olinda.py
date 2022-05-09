@@ -2,15 +2,12 @@ import pandas as pd
 import requests
 import numpy as np
 import re
-import warnings
-import sqlite3
 import os
 import logging
 
 from sqlalchemy import create_engine
 from datetime import datetime
 from bs4 import BeautifulSoup
-
 
 
 def data_collection(url, headers):
@@ -26,7 +23,6 @@ def data_collection(url, headers):
     numero_casas = int(re.search('\d+', numero_casas).group(0))
 
     numero_paginas = numero_casas/24
-
 
     # auxiliares
     pagina = range(1, int(numero_paginas)-2, 1)
@@ -91,7 +87,7 @@ def data_insert(dados):
         'banheiros',
         'preco',
         'id',
-        'scrapy_datetime',
+        'scrapy_datetime'
     ]]
 
     # create database connection
@@ -100,6 +96,7 @@ def data_insert(dados):
     # data insert
     data_insert.to_sql('imoveis', con=conn, if_exists='append', index=False)
 
+    return None
 
 # url
 url = 'https://www.zapimoveis.com.br/venda/imoveis/pe+olinda/?pagina=1'
